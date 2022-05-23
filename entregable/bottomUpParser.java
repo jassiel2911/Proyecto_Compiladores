@@ -25,7 +25,7 @@ public class bottomUpParser{
 			String cambio = cadena.replaceFirst("i","T");
 			System.out.println("Cadena: "+cambio);
 			if(cambio.equals(cadena)){
-				System.out.println("La cadena si fue aceptada: )\n");	
+				System.out.println("\n******La cadena si fue aceptada******\n");	
 			}
 			else{
 				switch(cambio){
@@ -96,9 +96,9 @@ public class bottomUpParser{
 		while((cadena = b.readLine()) !=null){
 			linea++;
 			//esta linea de codigo delimita la expresion regular del ejemplos solicitado
-			if(cadena.matches("i[+|-]?[()*i[+|-]i[)]+[;]]")){ //i-(i+i)
+			if(cadena.matches("i[+|-]?[(]*i[+|-]i[)]+[;]")){ //i-(i+i)
 			//aqui mostrara la cadena solicitada
-				System.out.println("ejemplo: "+cadena);
+				System.out.println("\nEjemplo: "+cadena);
 				if(cadena.contains("()")){ //buscara la presencia de parentesis
 					parentesis = CP(cadena);
 					if(parentesis != 0){
