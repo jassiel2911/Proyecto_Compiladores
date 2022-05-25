@@ -1,3 +1,17 @@
+/*
+ * 			Universidad Nacional Autónoma de México 
+ * 					Facultad de Ingeniería
+ * 						Compiladores
+ * 						Integrantes:
+ * 					
+ *	 		Bautista Pérez Brian Jassiel
+ *			González Ramírez David
+ *			Guillen Castillo Jorge Luis
+ *			Meneses Gómez Iassiel Navih
+ */ 
+
+
+
 import java.io.*;
 
 
@@ -14,52 +28,57 @@ public class bottomUpParser{
 	//Definicion de la gramatica
 	public static void regla1(String cadena){
 		if(cadena.length()==2){
-			System.out.println("i -> T");
-	//regla 2
+			System.out.println("T -> i");
 			String cambio = cadena.replaceFirst("i","T");
 			System.out.println("Cadena: "+cambio);
 			regla5(cambio);
 		}
 		else if(cadena.length()>=3){
-			System.out.println("i->T");
-			String cambio = cadena.replaceFirst("i","T");
+			System.out.println("T-> i");
+			String cambio = cadena.replace("i+i","i+T");
 			System.out.println("Cadena: "+cambio);
 			if(cambio.equals(cadena)){
 				System.out.println("\n******La cadena si fue aceptada******\n");	
 			}
 			else{
 				switch(cambio){
+				    case "i-i+T;" -> regla7(cambio);
+				    case "i-i-T;" -> regla6(cambio);	
 					case "E+T;" -> regla4(cambio);
 					case "E-T;" -> regla3(cambio);
+					case "i-(i+T);" -> regla7(cambio);
+				    case "i-(i-T);" -> regla6(cambio);	
 					case "(E+T);" -> regla4(cambio);
-					case "(E-T); " -> regla3(cambio);
+					case "(E-T);" -> regla3(cambio);
 					default -> regla5(cambio);
 				}
 			}
 		}
 	}
 
-	//Regla 1
+	//Regla 2
 	public static void regla2(String cadena){
-		System.out.println("E -> T");
+		System.out.println("T -> E");
 		String cambio = cadena.replace("(E)", "T");
 		System.out.println("Cadena: "+cambio);
-		regla5(cambio);
+		regla6(cambio);
 	}
 	
 	//Regla 3
 	public static void regla3(String cadena){
-		System.out.println("E-T -> E");
+		System.out.println("E -> E-T");
 		String cambio = cadena.replace("E-T","E");
 		System.out.println("Cadena: "+cambio);
 		if(cambio.length()!=2){
 			regla2(cambio);
+		}else if(cambio.length()==2){
+			regla11(cambio);
 		}
 	}
 
 	//Regla4
 	public static void regla4(String cadena){
-		System.out.println("E+T -> E");
+		System.out.println("E -> E+T");
 		String cambio = cadena.replace("E+T", "E");
 		System.out.println("cadena: "+cambio);
 		if(cambio.length()!=2){
@@ -70,23 +89,82 @@ public class bottomUpParser{
 	//Regla5
 	public static void regla5(String cadena){
 		if(cadena.length() == 2){
-			System.out.println("T->E");
+			System.out.println("E-> T");
 			String cambio = cadena.replaceFirst("T", "E");
 			System.out.println("Cadena: "+cambio);
 		}
 		else if(cadena.length() >= 3){
 			contador++;
-			System.out.println("T -> E");
+			System.out.println("E -> T");
 			String cambio = cadena.replaceFirst("T","E");
 			System.out.println("Cadena: "+cambio);
 			if(cambio.contains("(") && flag != 0){
 				regla2(cambio);
 			}
 			else{
-				regla1(cambio);
+				regla10(cambio);
 			}
 		}
 	}
+
+	//Regla6
+	public static void regla6(String cadena){
+		System.out.println("T-> i");
+		String cambio = cadena.replace("i-T","T-T");
+		System.out.println("cadena: "+cambio);
+		if(cambio.length()!=2){
+			regla8(cambio);
+		}
+	}
+
+
+	//Regla7
+	public static void regla7(String cadena){
+		System.out.println("T-> i");
+		String cambio = cadena.replace("i+T","T+T");
+		System.out.println("cadena: "+cambio);
+		if(cambio.length()!=2){
+			regla9(cambio);
+		}
+	}
+
+
+	//Regla8
+	public static void regla8(String cadena){
+		System.out.println("E-> T");
+		String cambio = cadena.replace("T-T","E-T");
+		System.out.println("cadena: "+cambio);
+		if(cambio.length()!=2){
+			regla3(cambio);
+		}
+	}
+
+	//Regla9
+	public static void regla9(String cadena){
+		System.out.println("E-> T");
+		String cambio = cadena.replace("T+T","E+T");
+		System.out.println("cadena: "+cambio);
+		if(cambio.length()!=2){
+			regla4(cambio);
+		}
+	}
+
+	//Regla10
+	public static void regla10(String cadena){
+		System.out.println("T-> i");
+		String cambio = cadena.replace("i","T");
+		System.out.println("cadena: "+cambio);
+		if(cambio.length()!=2){
+			regla8(cambio);
+		}
+	}
+
+	//Regla11
+	public static void regla11(String cadena){
+		System.out.println("\n******La cadena si fue aceptada******\n");
+	}
+
+
 
 	public static void analizador() throws NoSuchFieldException, IOException{
 		String cadena;
@@ -109,7 +187,7 @@ public class bottomUpParser{
 							regla1(cadena);
 					}	
 				}
-				else{
+				else{ 
 					regla1(cadena);
 				}
 			}
