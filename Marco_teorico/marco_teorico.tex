@@ -37,7 +37,7 @@
 \setlength{\parindent}{0cm}
 \begin{document}
 
-%\renewcommand{\refname}{Bibliografía}
+\renewcommand{\refname}{Bibliografía}
 \begin{figure}
     \subfloat{\includegraphics[width = 0.2\textwidth]{img/unamescudo}}
     \hfill
@@ -102,6 +102,7 @@ si la cadena es válida o no.
 \section{Desarrollo}
 Se debe de elaborar un analizador sintáctico ascendente que revise las sentencias
 de acuerdo a la siguiente gramática:
+
 $E \rightarrow T$ \\
 $E \rightarrow E + T$ \\
 $E \rightarrow E - T$ \\
@@ -135,7 +136,7 @@ $3) E \rightarrow E - T$ \\
 $4) T \rightarrow i$ \\
 $5) E \rightarrow (E)$ \\
 
-\textbf{Cadena de Entrada.}
+\textbf{Cadena de Entrada.} \\
 $i-(i+3.4)$
 
 $4) T \rightarrow i - (i + T)$ \\
@@ -147,7 +148,7 @@ $4) T \rightarrow T - T $ \\
 $1) E \rightarrow E - T$ \\
 $3) E \rightarrow E$ \\
 
-\textbf{Cadena transformada con la gramática para realizar el analizador sintáctico ascendente:}
+\textbf{Cadena transformada con la gramática para realizar el analizador sintáctico ascendente:} \\
 $i-(i +i)$
 
 $3) E \rightarrow E - T$ \\
@@ -173,4 +174,10 @@ comprender de una manera práctica las fases que lleva a cabo el compilador para
 realizar la transición entre código fuente a código máquina, que es un proceso
 que a simple vista no se distingue pero que conociendo estos conceptos de analizador
 léxico, sintáctico y semántico podemos ver que es un proceso no tan sencillo.
+
+\begin{thebibliography}{3}
+    \bibitem{AHO} \textsc{Aho, Alfred V}, (2008) \textit{Compiladores. Principios,
+    técnicas y herramientas.}, 2da ed. México \textit{Person Education}  
+\end{thebibliography}
+
 \end{document}
